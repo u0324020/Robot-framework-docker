@@ -32,16 +32,15 @@ jobs:
       - name: upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: robot-report
+          name: reports
           path: robot/reports/
 
       - name: Download reports
         uses: actions/download-artifact@v1
         with:
-          name: robot-report
+          name: reports
 
       - name: Send report to commit
         uses: joonvena/robotframework-reporter-action@v1.0
         with:
           gh_access_token: ${{ secrets.GIT_TOKEN }}
-          
