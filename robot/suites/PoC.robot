@@ -3,22 +3,17 @@ Documentation    TestingDemoWebPage
 
 Library    SeleniumLibrary
 Library    RequestsLibrary
+
 Resource    keywords.robot
 
 *** Variables ***
-${GOOGLE_INPUT}    xpath:/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input
+${HTTP_LOCAL_SERVER}    http://172.28.0.3:8080
 
 *** Test Cases ***
-# Open Demo Web Page
-#     Open Site
-#     Input Text    ${GOOGLE_INPUT}    TrendMicro
-#     Press Keys    ${GOOGLE_INPUT}    ENTER
-#     Close Browser
-
-Test via Request
-    ${resp}=    GET    http://13.83.81.91/login
+Test web-server via Request
+    ${resp}=    GET    ${HTTP_LOCAL_SERVER}
     Status Should Be    OK    ${resp}
-
+    
 # Open demo-Page
 #     Open 8080
 #     Page Should Contain Element    xpath:/html/body/pre    hello world

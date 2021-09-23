@@ -5,7 +5,7 @@ services:
         networks: 
             robot:
                 ipv4_address: 172.28.0.2
-        image: aws.registry.trendmicro.com/soter/robotframework
+        image: gojane20/demo-robot
         shm_size: "256M"
         environment:
             USERNAME: Justus
@@ -21,7 +21,7 @@ services:
         networks: 
             robot:
                 ipv4_address: 172.28.0.3
-        image: ${DEMO_SERVICE_TAG}
+        image: gojane20/demo-service
         ports: 
             - "8080:8080"
 
