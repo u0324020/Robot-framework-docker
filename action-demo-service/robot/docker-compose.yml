@@ -1,0 +1,36 @@
+version: '3.3'
+services:
+    robot_test:
+        container_name: robot-container
+        networks: 
+            robot:
+                ipv4_address: 172.28.0.2
+        image: aws.registry.trendmicro.com/soter/robotframework
+        shm_size: "256M"
+        environment:
+            USERNAME: Justus
+        volumes: [
+           "$PWD/suites:/suites",
+           "$PWD/scripts:/scripts",
+           "$PWD/reports:/reports"
+        ]
+        command: "robot --console verbose --outputdir reports suites/"
+
+    demo_service:
+        container_name: web-container
+        networks: 
+            robot:
+                ipv4_address: 172.28.0.3
+        image: ${DEMO_SERVICE_TAG}
+        ports: 
+            - "8080:8080"
+
+networks: 
+    robot:
+        driver: bridge
+        ipam: 
+            driver: default
+            config:
+                - subnet: 172.28.0.0/16
+                  gateway: 172.28.0.1
+        
