@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1.1 (Python 3.10.0a6 on linux)" generated="20210923 06:02:52.577" rpa="false" schemaversion="2">
+<suite id="s1" name="Suites" source="/suites">
+<suite id="s1-s1" name="PoC" source="/suites/PoC.robot">
+<test id="s1-s1-t1" name="Test web-server via Request">
+<kw name="GET" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>${HTTP_LOCAL_SERVER}</arg>
+<doc>Sends a GET request.</doc>
+<msg timestamp="20210923 06:02:54.012" level="INFO">GET Request : url=http://172.28.0.3:8080/ 
+ path_url=/ 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210923 06:02:54.012" level="INFO">GET Response : url=http://172.28.0.3:8080/ 
+ status=200, reason=OK 
+ headers={'Content-Type': 'text/plain; charset=utf-8', 'Date': 'Thu, 23 Sep 2021 06:02:54 GMT', 'Content-Length': '11'} 
+ body=hello world 
+ </msg>
+<msg timestamp="20210923 06:02:54.012" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210923 06:02:54.004" endtime="20210923 06:02:54.012"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>OK</arg>
+<arg>${resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210923 06:02:54.013" endtime="20210923 06:02:54.013"/>
+</kw>
+<status status="PASS" starttime="20210923 06:02:54.003" endtime="20210923 06:02:54.013"/>
+</test>
+<doc>TestingDemoWebPage</doc>
+<status status="PASS" starttime="20210923 06:02:52.635" endtime="20210923 06:02:54.014"/>
+</suite>
+<status status="PASS" starttime="20210923 06:02:52.580" endtime="20210923 06:02:54.015"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Suites">Suites</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1" name="PoC">Suites.PoC</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
