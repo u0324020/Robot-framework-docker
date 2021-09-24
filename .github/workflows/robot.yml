@@ -52,7 +52,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: 'robot/reports/robots.xml' # test file name filter method
+          files: 'robot/suites/xunit.xml' # test file name filter method
           report_individual_runs: "true"
           check_name: "l1 Test Results"
 

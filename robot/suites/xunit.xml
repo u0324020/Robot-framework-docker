@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PoC" tests="1" errors="0" failures="1" skipped="0" time="12.050">
+<testcase classname="PoC" name="Test web-server via Request" time="11.887">
+<failure message="Execution terminated by signal" type="AssertionError"/>
+</testcase>
+</testsuite>

@@ -15,7 +15,8 @@ LABEL name="Docker build Robot Framework"
 RUN apt-get update \
     && apt-get install -y xvfb wget ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 \
        libatspi2.0-0 libcups2 libdbus-1-3 libgbm1 libgtk-3-0 libnspr4 libnss3 \
-       libxcomposite1 libxkbcommon0 libxrandr2 xdg-utils ntpdate openssl
+       libxcomposite1 libxkbcommon0 libxrandr2 xdg-utils ntpdate openssl \
+       apt-get install vim
 
 RUN python3 -m pip install robotframework && pip install robotframework-requests &&  pip install robotframework-selenium2library \
     && pip install xvfbwrapper && pip install robotframework-xvfb && pip install certifi && pip install asn1crypto \
@@ -31,5 +32,3 @@ RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
     && rm chromedriver_linux64.zip \
     && mv chromedriver /usr/local/bin \
     && chmod +x /usr/local/bin/chromedriver
-
-CMD ["/scripts/run_suite.sh"]
