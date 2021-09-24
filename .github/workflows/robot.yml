@@ -15,45 +15,36 @@ jobs:
       # sync repo
       - uses: actions/checkout@v2
 
-      # - name: Docker Hub login
-      #   uses: azure/docker-login@v1
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Docker Hub login
+        uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # - name: l1-testing
-      #   run: |
-      #     cd robot
-      #     docker-compose up -d
-      #     sleep 5s
-      #     [ -f reports/log.html ] && docker-compose down && echo "[ Robot-Debug ] l1-testing is finished" || echo "[ Robot-Debug ] log file not exists"
-      #     cd -
+      - name: l1-testing
+        run: |
+          cd robot
+          docker-compose up -d
+          sleep 5s
+          [ -f reports/log.html ] && docker-compose down && echo "[ Robot-Debug ] l1-testing is finished" || echo "[ Robot-Debug ] log file not exists && exit 1"
+          cd -
 
-      # - name: upload artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: robot-reports
-      #     path: robot/reports/
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: robot-reports
+          path: robot/reports/
 
-      # - name: Download reports
-      #   uses: actions/download-artifact@v1
-      #   with:
-      #     name: robot-reports
-
-      # - name: Send report to commit
-      #   uses: joonvena/robotframework-reporter-action@v1.0
-      #   with:
-      #     gh_access_token: ${{ secrets.GIT_TOKEN }}
-      #     report_path: robot-reports
-      #     sha: ${{ github.sha }}
+      - name: Download reports
+        uses: actions/download-artifact@v1
+        with:
+          name: robot-reports
 
       # publish test report
       - name: publish l1-test results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: 'robot/suites/xunit.xml' # test file name filter method
+          files: 'robot-reports/xunit.xml' # test file name filter method
           report_individual_runs: "true"
           check_name: "l1 Test Results"
-
-          

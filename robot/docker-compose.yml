@@ -14,7 +14,7 @@ services:
            "$PWD/scripts:/scripts",
            "$PWD/reports:/reports"
         ]
-        command: "robot --console verbose --outputdir reports suites/"
+        command: "robot --console verbose --outputdir reports --xunit xunit.xml suites/"
 
     demo_service:
         container_name: web-container

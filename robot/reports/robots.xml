@@ -1,1 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="robotframework" errors="1" failures="1" skipped="1" tests="4" time="1.023" timestamp="2021-09-23T16:50:25.406702" hostname="tw-janeycchen"><testcase classname="Test web-server via Request" name="test_one" time="1.2" /></testsuite></testsuites>
