@@ -26,9 +26,12 @@ jobs:
         run: |
           cd robot
           docker-compose up -d
-          sleep 5s
-          docker-compose down
-          [ -f reports/test.html ] && ${{ env.l1-test-check }}=true && echo "[ Robot-Debug ] l1-testing is finished" || echo "[ Robot-Debug ] log file not exists"
+          while [ -f reports/xunit.xml ]
+          do
+            docker-compose down
+            ${{ env.l1-test-check }}=true
+            echo "[ Robot-Debug ] l1-testing is finished"
+          done
           cd -
 
       - name: l1-test report check
@@ -36,7 +39,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-              core.setFailed('env.l1-test-check and true are not equivalent!')
+              core.setFailed('[ Robot-Debug ] log file not exists ')
 
       - name: upload artifact
         uses: actions/upload-artifact@v2
