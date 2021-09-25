@@ -1,13 +1,15 @@
 name: robot
 
 on: 
-  # push:
+  push:
   workflow_dispatch:
     
 jobs:
 
   robot-job:
     runs-on: ubuntu-latest
+    env:
+      l1-test-check: false
     # job steps
     steps:
 
@@ -25,8 +27,16 @@ jobs:
           cd robot
           docker-compose up -d
           sleep 5s
-          [ -f reports/log.html ] && docker-compose down && echo "[ Robot-Debug ] l1-testing is finished" || echo "[ Robot-Debug ] log file not exists && exit 1"
+          docker-compose down
+          [ -f reports/test.html ] && ${{ env.l1-test-check }}=true && echo "[ Robot-Debug ] l1-testing is finished" || echo "[ Robot-Debug ] log file not exists"
           cd -
+
+      - name: l1-test report check
+        if: ${{ env.l1-test-check }} != true
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('env.l1-test-check and true are not equivalent!')
 
       - name: upload artifact
         uses: actions/upload-artifact@v2
