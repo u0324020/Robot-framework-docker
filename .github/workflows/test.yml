@@ -23,5 +23,5 @@ jobs:
         if: ${{ env.MY_ENV_VAR_F }}
 
       - name: if
-        if: contains(['J'],env.MY_ENV_VAR_IF)
+        if: contains(env.MY_ENV_VAR_IF, 'J')
         run:  echo "YES"
