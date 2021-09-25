@@ -23,5 +23,16 @@ jobs:
         if: ${{ env.MY_ENV_VAR_F }}
 
       - name: if
-        if: contains(env.MY_ENV_VAR_IF, 'J')
+        if: contains(env.MY_ENV_VAR_F, 'false')
         run:  echo "YES"
+
+      - name: A/B Check
+        if: ${{ env.MY_ENV_VAR_F }} != ${{ env.MY_ENV_VAR }}
+        run : echo "A/B"
+
+      - name: A/B Check
+        if: ${{ env.MY_ENV_VAR_F }} != true
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('env.MY_ENV_VAR_F and envB are not equivalent!')
