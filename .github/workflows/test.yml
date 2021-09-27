@@ -30,13 +30,14 @@ jobs:
       #   if: ${{ env.MY_ENV_VAR_F }} != ${{ env.MY_ENV_VAR }}
       #   run : echo "A/B"
 
-      - run: |
+      - name: step1
+        id: set
+        run: |
           echo ${{ env.MY_ENV_VAR_F }}
-          echo "::set-env name=MY_ENV_VAR_F::true"
-          echo ${{ env.MY_ENV_VAR_F }}
+          echo "::set-output name=commit::true"
 
       - name: A/B Check
-        if: ${{ env.MY_ENV_VAR_F }} != true
+        if: steps.set.outputs.commit != true
         uses: actions/github-script@v3
         with:
           script: |
