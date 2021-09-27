@@ -1,7 +1,7 @@
 name: robot
 
 on: 
-  push:
+  # push:
   workflow_dispatch:
     
 jobs:
@@ -36,7 +36,7 @@ jobs:
             fi
             sleep 1
             ((timeout--))
-            echo "[ Robot-Debug ] waiting for reports generate: $timeout s"
+            echo "[ Robot-Debug ] waiting for reports generate: remaining $timeout sec."
           done
           docker-compose down
           ${{ env.l1-test-check }}=true

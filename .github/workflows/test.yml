@@ -1,7 +1,7 @@
 name: robot
 
 on: 
-  # push:
+  push:
   workflow_dispatch:
     
 jobs:
@@ -15,20 +15,25 @@ jobs:
       MY_ENV_VAR_IF: 'Jane'
     steps:
 
-      - uses: actions/hello-world-javascript-action@v1.1
-        if: ${{ env.MY_ENV_VAR }}
+      # - uses: actions/hello-world-javascript-action@v1.1
+      #   if: ${{ env.MY_ENV_VAR }}
 
-      - name: test-2
-        uses: actions/hello-world-javascript-action@v1.1
-        if: ${{ env.MY_ENV_VAR_F }}
+      # - name: test-2
+      #   uses: actions/hello-world-javascript-action@v1.1
+      #   if: ${{ env.MY_ENV_VAR_F }}
 
-      - name: if
-        if: contains(env.MY_ENV_VAR_F, 'false')
-        run:  echo "YES"
+      # - name: if
+      #   if: contains(env.MY_ENV_VAR_F, 'false')
+      #   run:  echo "YES"
 
-      - name: A/B Check
-        if: ${{ env.MY_ENV_VAR_F }} != ${{ env.MY_ENV_VAR }}
-        run : echo "A/B"
+      # - name: A/B Check
+      #   if: ${{ env.MY_ENV_VAR_F }} != ${{ env.MY_ENV_VAR }}
+      #   run : echo "A/B"
+
+      - run: |
+          echo ${{ env.MY_ENV_VAR_F }}
+          ${{ env.MY_ENV_VAR_F }} = false
+          echo ${{ env.MY_ENV_VAR_F }}
 
       - name: A/B Check
         if: ${{ env.MY_ENV_VAR_F }} != true
