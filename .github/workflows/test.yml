@@ -36,8 +36,15 @@ jobs:
           echo "::set-env name=check::true"
           echo ${{ env.check }}
 
+      # - name: A/B Check
+      #   if: ${{ env.check }} != true
+      #   uses: actions/github-script@v3
+      #   with:
+      #     script: |
+      #         core.setFailed('env.MY_ENV_VAR_F and envB are not equivalent!')
+
       - name: A/B Check
-        if: ${{ env.check }} != true
+        if: hashFiles('robot/Dockerfile') == ''
         uses: actions/github-script@v3
         with:
           script: |
