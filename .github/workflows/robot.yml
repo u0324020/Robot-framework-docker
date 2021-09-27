@@ -20,6 +20,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: l1-test report check
+        if: hashFiles('robot/reports/xunit.xml') == ''
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('[ Robot-Debug ] log file not exists ')
+
       - name: l1-testing
         run: |
           cd robot
@@ -41,12 +48,12 @@ jobs:
           echo "[ Robot-Debug ] l1-testing is finished"
           cd -
 
-      - name: l1-test report check
-        if: hashFiles('robot/reports/xunit.xml') == ''
-        uses: actions/github-script@v3
-        with:
-          script: |
-              core.setFailed('[ Robot-Debug ] log file not exists ')
+      # - name: l1-test report check
+      #   if: hashFiles('robot/reports/xunit.xml') == ''
+      #   uses: actions/github-script@v3
+      #   with:
+      #     script: |
+      #         core.setFailed('[ Robot-Debug ] log file not exists ')
 
       - name: upload artifact
         uses: actions/upload-artifact@v2
