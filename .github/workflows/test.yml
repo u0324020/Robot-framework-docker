@@ -32,7 +32,7 @@ jobs:
 
       - run: |
           echo ${{ env.MY_ENV_VAR_F }}
-          ${{ env.MY_ENV_VAR_F }} = false
+          MY_ENV_VAR_F=true
           echo ${{ env.MY_ENV_VAR_F }}
 
       - name: A/B Check
