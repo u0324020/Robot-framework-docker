@@ -7,7 +7,7 @@
 
 # After 60 seconds the loop will exit
 timeout=300
-
+timeout_count=0
 while [ ! -f Dockerfile ];
 do
   # When the timeout is equal to zero, show an error and leave the loop.
@@ -17,6 +17,7 @@ do
   fi
   sleep 1
   ((timeout--))
-  echo "[ Robot-Debug ] waiting for reports generate: $timeout s"
+  ((timeout_count++))
+  echo "[ Robot-Debug ] waiting for reports generate: $timeout_count s"
 done
 echo "file found"

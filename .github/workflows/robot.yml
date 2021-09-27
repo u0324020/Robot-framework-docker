@@ -27,6 +27,7 @@ jobs:
           cd robot
           docker-compose up -d
           timeout=10
+          timeout_count=0
           while [ ! -f reports/xunit.xml ];
           do
             if [ "$timeout" == 0 ]; then
@@ -36,12 +37,14 @@ jobs:
             fi
             sleep 1
             ((timeout--))
-            echo "[ Robot-Debug ] waiting for reports generate: $timeout s"
+            ((timeout_count++))
+            echo "[ Robot-Debug ] waiting for reports generate: $timeout_count s"
           done
           docker-compose down
           ${{ env.l1-test-check }}=true
           echo "[ Robot-Debug ] reports/xunit.xml file found"
           echo "[ Robot-Debug ] l1-testing is finished"
+          echo ${{ env.l1-test-check }}
           cd -
 
       - name: l1-test report check
