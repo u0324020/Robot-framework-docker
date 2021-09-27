@@ -1,15 +1,13 @@
 name: robot
 
 on: 
-  # push:
+  push:
   workflow_dispatch:
     
 jobs:
 
   robot-job:
     runs-on: ubuntu-latest
-    env:
-      l1-test-check: false
     # job steps
     steps:
 
@@ -39,13 +37,12 @@ jobs:
             echo "[ Robot-Debug ] waiting for reports generate: remaining $timeout sec."
           done
           docker-compose down
-          ${{ env.l1-test-check }}=true
           echo "[ Robot-Debug ] reports/xunit.xml file found"
           echo "[ Robot-Debug ] l1-testing is finished"
           cd -
 
       - name: l1-test report check
-        if: ${{ env.l1-test-check }} != true
+        if: hashFiles('robot/reports/xunit.xml') == ''
         uses: actions/github-script@v3
         with:
           script: |

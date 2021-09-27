@@ -1,7 +1,7 @@
 name: robot
 
 on: 
-  push:
+  # push:
   workflow_dispatch:
     
 jobs:
@@ -29,21 +29,17 @@ jobs:
       # - name: A/B Check
       #   if: ${{ env.MY_ENV_VAR_F }} != ${{ env.MY_ENV_VAR }}
       #   run : echo "A/B"
-      - uses: actions/checkout@v2
-      # - name: step1
-      #   run: |
-      #     echo ${{ env.MY_ENV_VAR_F }}
-      #     echo "::set-env name=check::true"
-      #     echo ${{ env.check }}
 
-      # - name: A/B Check
-      #   if: ${{ env.check }} != true
-      #   uses: actions/github-script@v3
-      #   with:
-      #     script: |
-      #         core.setFailed('env.MY_ENV_VAR_F and envB are not equivalent!')
+      - uses: actions/checkout@v2
 
       - name: A/B Check
+        if: ${{ env.MY_ENV_VAR }} != true
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('env.MY_ENV_VAR_F and envB are not equivalent!')
+
+      - name: File Check
         if: hashFiles('robot/Dockerfile') != ''
         uses: actions/github-script@v3
         with:
