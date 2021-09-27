@@ -30,11 +30,11 @@ jobs:
       #   if: ${{ env.MY_ENV_VAR_F }} != ${{ env.MY_ENV_VAR }}
       #   run : echo "A/B"
       - uses: actions/checkout@v2
-      - name: step1
-        run: |
-          echo ${{ env.MY_ENV_VAR_F }}
-          echo "::set-env name=check::true"
-          echo ${{ env.check }}
+      # - name: step1
+      #   run: |
+      #     echo ${{ env.MY_ENV_VAR_F }}
+      #     echo "::set-env name=check::true"
+      #     echo ${{ env.check }}
 
       # - name: A/B Check
       #   if: ${{ env.check }} != true
