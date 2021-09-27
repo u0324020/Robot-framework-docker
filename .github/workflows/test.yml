@@ -44,7 +44,7 @@ jobs:
       #         core.setFailed('env.MY_ENV_VAR_F and envB are not equivalent!')
 
       - name: A/B Check
-        if: hashFiles('robot/Dockerfile') == ''
+        if: hashFiles('robot/Dockerfile') != ''
         uses: actions/github-script@v3
         with:
           script: |
