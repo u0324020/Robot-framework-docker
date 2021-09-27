@@ -4,7 +4,6 @@ on:
   push:
   workflow_dispatch:
     
-
 jobs:
 
   robot-job:
@@ -25,9 +24,29 @@ jobs:
         run: |
           cd robot
           docker-compose up -d
-          sleep 5s
-          [ -f reports/log.html ] && docker-compose down && echo "[ Robot-Debug ] l1-testing is finished" || echo "[ Robot-Debug ] log file not exists && exit 1"
+          timeout=10
+          while [ ! -f reports/xunit.xml ];
+          do
+            if [ "$timeout" == 0 ]; then
+              docker-compose down
+              echo "ERROR: Timeout while waiting for the file reports/xunit.xml."
+              exit 1
+            fi
+            sleep 1
+            ((timeout--))
+            echo "[ Robot-Debug ] waiting for reports generate: remaining $timeout sec."
+          done
+          docker-compose down
+          echo "[ Robot-Debug ] reports/xunit.xml file found"
+          echo "[ Robot-Debug ] l1-testing is finished"
           cd -
+
+      - name: l1-test report check
+        if: hashFiles('robot/reports/xunit.xml') == ''
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('[ Robot-Debug ] log file not exists ')
 
       - name: upload artifact
         uses: actions/upload-artifact@v2

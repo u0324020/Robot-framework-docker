@@ -1,0 +1,47 @@
+name: robot
+
+on: 
+  # push:
+  workflow_dispatch:
+    
+jobs:
+
+  robot-job:
+    runs-on: ubuntu-latest
+    # job steps
+    env:
+      MY_ENV_VAR: true
+      MY_ENV_VAR_F: false
+      MY_ENV_VAR_IF: 'Jane'
+    steps:
+
+      # - uses: actions/hello-world-javascript-action@v1.1
+      #   if: ${{ env.MY_ENV_VAR }}
+
+      # - name: test-2
+      #   uses: actions/hello-world-javascript-action@v1.1
+      #   if: ${{ env.MY_ENV_VAR_F }}
+
+      # - name: if
+      #   if: contains(env.MY_ENV_VAR_F, 'false')
+      #   run:  echo "YES"
+
+      # - name: A/B Check
+      #   if: ${{ env.MY_ENV_VAR_F }} != ${{ env.MY_ENV_VAR }}
+      #   run : echo "A/B"
+
+      - uses: actions/checkout@v2
+
+      - name: A/B Check
+        if: ${{ env.MY_ENV_VAR }} != true
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('env.MY_ENV_VAR_F and envB are not equivalent!')
+
+      - name: File Check
+        if: hashFiles('robot/Dockerfile') != ''
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('env.MY_ENV_VAR_F and envB are not equivalent!')
