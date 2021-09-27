@@ -27,7 +27,6 @@ jobs:
           cd robot
           docker-compose up -d
           timeout=10
-          timeout_count=0
           while [ ! -f reports/xunit.xml ];
           do
             if [ "$timeout" == 0 ]; then
@@ -37,8 +36,7 @@ jobs:
             fi
             sleep 1
             ((timeout--))
-            ((timeout_count++))
-            echo "[ Robot-Debug ] waiting for reports generate: $timeout_count s"
+            echo "[ Robot-Debug ] waiting for reports generate: $timeout s"
           done
           docker-compose down
           ${{ env.l1-test-check }}=true
